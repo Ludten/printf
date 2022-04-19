@@ -34,20 +34,32 @@ void s(char **str, va_list args, int *flags,
 int *field_width, int *precision, int *len)
 {
 	int i;
-	const char *s;
+	const char *s, *b;
 
 	s = va_arg(args, char *);
-	*len = _strnlen(s, *precision);
-
-	if (!(*flags & LEFT))
+	if (!s)
 	{
+		b = "(null)";
+
+		while (*b)
+		{
+			*((*str)++) = *b++;
+		}
+	}
+	else
+	{
+		*len = _strnlen(s, *precision);
+
+		if (!(*flags & LEFT))
+		{
+			while (*len < (*field_width)--)
+				*((*str)++) = ' ';
+		}
+		for (i = 0; i < *len; i++)
+			*((*str)++) = *s++;
 		while (*len < (*field_width)--)
 			*((*str)++) = ' ';
 	}
-	for (i = 0; i < *len; i++)
-		*((*str)++) = *s++;
-	while (*len < (*field_width)--)
-		*((*str)++) = ' ';
 }
 
 /**
@@ -141,4 +153,3 @@ int customspecifiers1(const char **fmt, char **str, va_list args, int *flags,
 		return (0);
 	}
 }
-

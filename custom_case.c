@@ -129,4 +129,3 @@ int customspecifiers2(const char **fmt, char **str, int *flags, int *base)
 			return (1);
 	}
 }
-

@@ -48,20 +48,22 @@ int _vsprintf(char *buf, const char *fmt, va_list args)
 /**
  * _printf - printf
  *
- * @fmt: format
+ * @format: format
  * @...: arguments
  * Return: int
  */
-int _printf(const char *fmt, ...)
+int _printf(const char *format, ...)
 {
 	char printf_buf[1024];
 	va_list args;
 	int printed;
 
-	va_start(args, fmt);
-	printed = _vsprintf(printf_buf, fmt, args);
+	if (format == NULL)
+		return (-1);
+
+	va_start(args, format);
+	printed = _vsprintf(printf_buf, format, args);
 	va_end(args);
 	_puts(printf_buf);
 	return (printed);
 }
-

@@ -10,9 +10,10 @@
 
 #include <unistd.h>
 #include <stdarg.h>
+#include <stddef.h>
 /* #include <string.h> */
 
-int _printf(const char *fmt, ...);
+int _printf(const char *format, ...);
 int _putchar(char c);
 void _puts(char *s);
 int _isdigit(char c);
@@ -35,4 +36,3 @@ int customspecifiers1(const char **fmt, char **str, va_list args, int *flags, in
 int customspecifiers2(const char **fmt, char **str, int *flags, int *base);
 
 #endif /* PRINTF */
-
