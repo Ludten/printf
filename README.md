@@ -1,112 +1,114 @@
-C - printf
+# A custom printf called `_printf`
 
-The learning objective of this projects are:
-Putting all knowledge learnt in C so far into creating the function.
+The learning objective of this projects are: Putting all knowledge learnt in C so far into creating the function.
 
-0. I'm not going anywhere. You can print that wherever you want to. I'm here
-and I'm a Spur for life
-Write a function that produces output according to a format.
+## Highlights and Design Goals
 
-    Prototype: int _printf(const char *format, ...);
-    Returns: the number of characters printed (excluding the null byte used to
-    end output to strings)
-    write output to stdout, the standard output stream
-    format is a character string. The format string is composed of zero or more
-    directives. See man 3 printf for more detail. You need to handle the
-    following conversion specifiers:
-        c
-        s
-        %
-    You don’t have to reproduce the buffer handling of the C library printf
-    function
-    You don’t have to handle the flag characters
-    You don’t have to handle field width
-    You don’t have to handle precision
-    You don’t have to handle the length modifiers
+The *_printf* implementation meets the following items:
 
-1. Education is when you read the fine print. Experience is what you get if you
-don't
-Handle the following conversion specifiers:
+ - NO dependencies, no libs, just one module file
+ - Support of all important flags, width and precision sub-specifiers (see below)
+ - Support of decimal/integer number representation
+ - no static vars/buffers
+ - Custom specifiers implemetations
+ 	- r: to reverse string
+  	- R: ROT13 encoding
+  	- S: replacing (0 < ASCII value < 32 or >= 127) with `\x` followed by their hexadecimal values
+ - Simply the best *_printf* around the alx cohort5
 
-    d
-    i
-    You don’t have to handle the flag characters
-    You don’t have to handle field width
-    You don’t have to handle precision
-    You don’t have to handle the length modifiers
+## Usage
 
-2. Just because it's in print doesn't mean it's the gospel
-Create a man page for your function.
+Add/link *printf.c* to your project and include *main.h*. That's it.
+Implement your low level output function needed for `printf()`:
+```C
+void _putchar(char character)
+{
+  // send char to console etc.
+}
+```
 
-3. With a face like mine, I do better in print
-Handle the following custom conversion specifiers:
+Usage is 1:1 like the according stdio.h library version:
+```C
+int printf(const char* format, ...);
+```
+## Format Specifiers
 
-    b: the unsigned int argument is converted to binary
+A format specifier follows this prototype: `%[flags][width][.precision][length]type`
+The following format specifiers are supported:
 
-4. What one has not experienced, one will never understand in print
-Handle the following conversion specifiers:
 
-    u
-    o
-    x
-    X
-    You don’t have to handle the flag characters
-    You don’t have to handle field width
-    You don’t have to handle precision
-    You don’t have to handle the length modifiers
+### Supported Types
 
-5. Nothing in fine print is ever good news
-Use a local buffer of 1024 chars in order to call write as little as possible.
+| Type   | Output |
+|--------|--------|
+| d or i | Signed decimal integer |
+| u      | Unsigned decimal integer	|
+| b      | Unsigned binary |
+| o      | Unsigned octal |
+| x      | Unsigned hexadecimal integer (lowercase) |
+| X      | Unsigned hexadecimal integer (uppercase) |
+| c      | Single character |
+| s      | String of characters |
+| p      | Pointer address |
+| %      | A % followed by another % character will write a single % |
 
-6. How is the world ruled and led to war? Diplomats lie to journalists and
-believe these lies when they see them in print
-6. How is the world ruled and led to war? Diplomats lie to journalists and
-believe these lies when they see them in print
+### Custom Specifiers
+| Type   | Output |
+|--------|--------|
+| r | prints the reversed string |
+| R      | prints the rot13'ed string     |
+| S      | prints the string |
 
-7. My weakness is wearing too much leopard print
-Handle the following custom conversion specifier:
+### Supported Flags
 
-    S : prints the string.
-    Non printable characters (0 < ASCII value < 32 or >= 127) are printed this
-    way: \x, followed by the ASCII code value in hexadecimal (upper case -
-    always 2 characters)
+| Flags | Description |
+|-------|-------------|
+| -     | Left-justify within the given field width; Right justification is the default. |
+| +     | Forces to precede the result with a plus or minus sign (+ or -) even for positive numbers.<br>By default, only negative numbers are preceded with a - sign. |
+| (space) | If no sign is going to be written, a blank space is inserted before the value. |
+| #     | Used with o, b, x or X specifiers the value is preceded with 0, 0b, 0x or 0X respectively for values different than zero.<br>Used with f, F it forces the written output to contain a decimal point even if no more digits follow. By default, if no digits follow, no decimal point is written. |
+| 0     | Left-pads the number with zeros (0) instead of spaces when padding is specified (see width sub-specifier). |
 
-8. The big print gives and the small print takes away
-Handle the following flag characters for non-custom conversion specifiers:
 
-    +
-    space
-    #
+### Supported Width
 
-9. Sarcasm is lost in print
-Handle the following length modifiers for non-custom conversion specifiers:
+| Width    | Description |
+|----------|-------------|
+| (number) | Minimum number of characters to be printed. If the value to be printed is shorter than this number, the result is padded with blank spaces. The value is not truncated even if the result is larger. |
+| *        | The width is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted. |
 
-    l
-    h
 
-Conversion specifiers to handle: d, i, u, o, x, X
+### Supported Precision
 
-10. Print some money and give it to us for the rain forests
-Handle the field width for non-custom conversion specifiers.
+| Precision	| Description |
+|-----------|-------------|
+| .number   | For integer specifiers (d, i, o, u, x, X): precision specifies the minimum number of digits to be written. If the value to be written is shorter than this number, the result is padded with leading zeros. The value is not truncated even if the result is longer. A precision of 0 means that no character is written for the value 0.<br>For f and F specifiers: this is the number of digits to be printed after the decimal point. **By default, this is 6, maximum is 9**.<br>For s: this is the maximum number of characters to be printed. By default all characters are printed until the ending null character is encountered.<br>If the period is specified without an explicit value for precision, 0 is assumed. |
+| .*        | The precision is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted. |
 
-11. The negative is the equivalent of the composer's score, and the print the
-performance
-Handle the precision for non-custom conversion specifiers.
 
-12. It's depressing when you're still around and your albums are out of print
-Handle the 0 flag character for non-custom conversion specifiers.
+### Supported Length
 
-13. Every time that I wanted to give up, if I saw an interesting textile, print
-what ever, suddenly I would see a collection
-Handle the - flag character for non-custom conversion specifiers.
+The length sub-specifier modifies the length of the data type.
 
-14. Print is the sharpest and the strongest weapon of our party
-Handle the following custom conversion specifier:
+| Length | d i  | u o x X |
+|--------|------|---------|
+| (none) | int  | unsigned int |
+| h      | short int | unsigned short int |
+| l      | long int | unsigned long int |
 
-    r : prints the reversed string
 
-15. The flood of print has turned reading into a process of gulping rather than
-savoring
-Handle the following custom conversion specifier:
+### Return Value
 
-    R: prints the rot13'ed string
+Upon successful return, all functions return the number of characters written, _excluding_ the terminating null character used to end the string.
+
+## Contributing
+
+0. Give this project a :star:
+1. Create an issue and describe your idea
+2. [Fork it](https://github.com/Ludten/printf/fork)
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Publish the branch (`git push origin my-new-feature`)
+6. Create a new pull request
+7. Profit! :heavy_check_mark:
+
