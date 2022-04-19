@@ -17,12 +17,12 @@ int *field_width, int *precision, int *len)
 	const char *s;
 
 	s = va_arg(args, char *);
-	if (!s)
+	/*if (!s)
 	{
 		*((*str)++) = '%';
 		*((*str)++) = 'r';
 		return;
-	}
+	}*/
 	*len = _strnlen(s, *precision);
 	l = _strnlen(s, *precision);
 
