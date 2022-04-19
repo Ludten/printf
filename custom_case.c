@@ -17,12 +17,12 @@ int *field_width, int *precision, int *len)
 	const char *s;
 
 	s = va_arg(args, char *);
-	/*if (!s)
+	if (!s)
 	{
 		*((*str)++) = '%';
 		*((*str)++) = 'r';
 		return;
-	}*/
+	}
 	*len = _strnlen(s, *precision);
 	l = _strnlen(s, *precision);
 
@@ -73,12 +73,14 @@ int *field_width, int *precision, int *len)
 	}
 	for (i = 0; i < l; i++)
 	{
-		for (j = 0; a[j] != '\0'; j++)
+		if (s[i] < 'A' || (s[i] > 'Z' && s[i] < 'a') || s[i] > 'z')
+			*((*str)++) = s[i];
+		else
 		{
-			if (s[i] == a[j])
+			for (j = 0; j <= 52; j++)
 			{
-				*((*str)++) = b[j];
-				break;
+				if (s[i] == a[j])
+					*((*str)++) = b[j];
 			}
 		}
 	}
