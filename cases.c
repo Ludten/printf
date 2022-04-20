@@ -73,6 +73,7 @@ int *field_width, int *precision, int *len)
  */
 void p(char **str, va_list args, int *field_width, int *flags, int *precision)
 {
+
 	if (*field_width == -1)
 	{
 		*field_width = sizeof(va_arg(args, unsigned long));
