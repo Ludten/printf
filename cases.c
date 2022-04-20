@@ -73,16 +73,30 @@ int *field_width, int *precision, int *len)
  */
 void p(char **str, va_list args, int *field_width, int *flags, int *precision)
 {
+	unsigned long s;
+	const char *b;
 
-	if (*field_width == -1)
+	s = va_arg(args, unsigned long);
+	if (!s)
 	{
-		*field_width = sizeof(va_arg(args, unsigned long));
-		/* *flags |= ZEROPAD; */
-		*flags |= SMALL;
-		*flags |= SPECIAL;
+		b = "(nil)";
+
+		while (*b)
+		{
+			*((*str)++) = *b++;
+		}
 	}
-	*str = number(*str, va_arg(args, unsigned long), 16, *field_width,
-		      *precision, *flags);
+	else
+	{
+		if (*field_width == -1)
+		{
+			*field_width = sizeof(s);
+			/* *flags |= ZEROPAD; */
+			*flags |= SMALL;
+			*flags |= SPECIAL;
+		}
+		*str = number(*str, s, 16, *field_width, *precision, *flags);
+	}
 }
 
 /**
