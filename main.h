@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdlib.h>
 /* #include <string.h> */
 
 int _printf(const char *format, ...);
@@ -29,6 +30,8 @@ void s(char **str, va_list args, int *flags,
 void r(char **str, va_list args, int *flags,
 		int *field_width, int *precision, int *len);
 void R(char **str, va_list args, int *flags,
+		int *field_width, int *precision, int *len);
+void S(char **str, va_list args, int *flags,
 		int *field_width, int *precision, int *len);
 void p(char **str, va_list args, int *field_width, int *flags, int *precision);
 void lh(va_list args, int *flags, int *qualifier, unsigned long *num);

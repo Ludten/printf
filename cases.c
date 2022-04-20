@@ -144,6 +144,9 @@ int customspecifiers1(const char **fmt, char **str, va_list args, int *flags,
 	case 'R':
 		R(str, args, flags, field_width, precision, len);
 		return (1);
+	case 'S':
+		S(str, args, flags, field_width, precision, len);
+		return (1);
 	case 'p':
 		p(str, args, field_width, flags, precision);
 		return (1);
@@ -154,3 +157,4 @@ int customspecifiers1(const char **fmt, char **str, va_list args, int *flags,
 		return (0);
 	}
 }
+
