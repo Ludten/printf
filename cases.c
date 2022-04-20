@@ -10,14 +10,24 @@
  */
 void c(char **str, va_list args, int *flags, int *field_width)
 {
-	if (!(*flags & LEFT))
+	char s;
+
+	s = (unsigned char)va_arg(args, int);
+	if (!s)
 	{
+		*((*str)++) = ' ';
+	}
+	else
+	{
+		if (!(*flags & LEFT))
+		{
+			while (--*field_width > 0)
+				*((*str)++) = ' ';
+		}
+		*((*str)++) = s;
 		while (--*field_width > 0)
 			*((*str)++) = ' ';
 	}
-	*((*str)++) = (unsigned char)va_arg(args, int);
-	while (--*field_width > 0)
-		*((*str)++) = ' ';
 }
 
 /**
