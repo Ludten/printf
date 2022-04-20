@@ -12,6 +12,12 @@ char *hex(char s)
 	int r, i = 3;
 	char *p = malloc(5 * sizeof(char));
 
+	if (p == NULL)
+	{
+		free(p);
+		return (NULL);
+	}
+
 	while (s)
 	{
 		r = s % 16;
@@ -48,6 +54,12 @@ char *transform(const char *str)
 		i++;
 	}
 	p = malloc((len + 1) * sizeof(*p));
+	if (p == NULL)
+	{
+		free(p);
+		return (NULL);
+	}
+
 	i = 0;
 	while (str[i])
 	{
