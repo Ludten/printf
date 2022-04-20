@@ -15,7 +15,7 @@ void c(char **str, va_list args, int *flags, int *field_width)
 	s = (unsigned char)va_arg(args, int);
 	if (!s)
 	{
-		*((*str)++) = ' ';
+		*((*str)++) = '\0';
 	}
 	else
 	{
